@@ -1,0 +1,3 @@
+cn/suwg/mybatis/test/ApiTest.class
+cn/suwg/mybatis/test/po/User.class
+cn/suwg/mybatis/test/dao/IUserDao.class

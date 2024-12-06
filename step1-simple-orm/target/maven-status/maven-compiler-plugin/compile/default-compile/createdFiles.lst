@@ -1,0 +1,8 @@
+cn/suwg/mybatis/Resources.class
+cn/suwg/mybatis/DefaultSqlSession.class
+cn/suwg/mybatis/SqlSessionFactoryBuilder.class
+cn/suwg/mybatis/SqlSession.class
+cn/suwg/mybatis/SqlSessionFactory.class
+cn/suwg/mybatis/Configuration.class
+cn/suwg/mybatis/DefaultSqlSessionFactory.class
+cn/suwg/mybatis/XNode.class
