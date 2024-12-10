@@ -1,6 +1,9 @@
 package cn.suwg.mybatis.test;
 
 import cn.suwg.mybatis.binding.MapperProxyFactory;
+import cn.suwg.mybatis.binding.MapperRegistry;
+import cn.suwg.mybatis.session.SqlSession;
+import cn.suwg.mybatis.session.defaults.DefaultSqlSessionFactory;
 import cn.suwg.mybatis.test.dao.IUserDao;
 
 import org.junit.Test;
@@ -22,20 +25,20 @@ public class ApiTest {
     // 测试mapperProxyFactory
     @Test
     public void testMapperProxyFactory(){
-        //创建MapperProxyFactory
-        MapperProxyFactory<IUserDao> mapperProxyFactory = new MapperProxyFactory<>(IUserDao.class);
+        // 1.注册Mapper
+        MapperRegistry registry = new MapperRegistry();
+        registry.addMapper("cn.suwg.mybatis.test.dao");
 
-        //模拟sqlSession, 方法名和方法调用响应.
-        Map<String, Object> sqlSession = new HashMap<>();
-        sqlSession.put("cn.suwg.mybatis.test.dao.IUserDao.queryUserName", "模拟执行 Mapper.xml 中 SQL 语句的操作：查询用户姓名:小苏");
-        sqlSession.put("cn.suwg.mybatis.test.dao.IUserDao.queryUserAge", 28);
-        IUserDao userDao = mapperProxyFactory.newInstance(sqlSession);
+        // 2.从SqlSessionFactory获取Session
+        DefaultSqlSessionFactory sqlSessionFactory = new DefaultSqlSessionFactory(registry);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        //调用方法
+         // 3.获取映射器对象
+        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
+
+        // 4.测试验证
         String result = userDao.queryUserName("10001");
-
-        Integer age = userDao.queryUserAge("10001");
-        logger.info("测试结果：{}, 年龄：{}",result, age);
+        logger.info("测试结果：{}, 年龄：{}",result, 28);
 
     }
 

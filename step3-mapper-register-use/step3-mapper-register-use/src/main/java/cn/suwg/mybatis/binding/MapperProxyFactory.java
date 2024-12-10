@@ -1,5 +1,7 @@
 package cn.suwg.mybatis.binding;
 
+import cn.suwg.mybatis.session.SqlSession;
+
 import java.lang.reflect.Proxy;
 import java.util.Map;
 
@@ -18,7 +20,7 @@ public class MapperProxyFactory<T> {
 
 
     // 创建代理对象.
-    public T newInstance(Map<String, Object> sqlSession){
+    public T newInstance(SqlSession sqlSession){
         final MapperProxy<T> mapperProxy = new MapperProxy<>(sqlSession, mapperInterface);
         return (T) Proxy.newProxyInstance(mapperInterface.getClassLoader(), new Class[]{mapperInterface}, mapperProxy);
     }
