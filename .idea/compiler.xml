@@ -6,7 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="step3-mapper-register-use" />
         <module name="step2-mapper-factory-proxy" />
+        <module name="step1-simple-orm" />
       </profile>
     </annotationProcessing>
   </component>

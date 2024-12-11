@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3ae398e1-722f-4c0b-8ca3-a3ee81def799" name="Changes" comment="feat: step1-实现一个简单的ORM框架" />
+    <list default="true" id="3ae398e1-722f-4c0b-8ca3-a3ee81def799" name="Changes" comment="feat: step1-实现一个简单的ORM框架">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/small-mybatis-study.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/small-mybatis-study.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/step1-simple-orm.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/step2-mapper-factory-proxy.iml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,6 +40,7 @@
       <MavenGeneralSettings>
         <option name="localRepository" value="$USER_HOME$/developUtils/repository" />
         <option name="mavenHome" value="$USER_HOME$/developUtils/apache-maven-3.6.3" />
+        <option name="useMavenConfig" value="true" />
         <option name="userSettingsFile" value="$USER_HOME$/developUtils/apache-maven-3.6.3/conf/settings.xml" />
       </MavenGeneralSettings>
     </option>
@@ -50,7 +58,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "jdk.selected.JAVA_MODULE": "1.8",
-    "last_opened_file_path": "/Users/suweibo/workplace/knonwledgePlanet/mybatis-study/small-mybatis-study/step1-simple-orm",
+    "last_opened_file_path": "/Users/suweibo/workplace/knonwledgePlanet/mybatis-study/small-mybatis-study",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.38665134",
