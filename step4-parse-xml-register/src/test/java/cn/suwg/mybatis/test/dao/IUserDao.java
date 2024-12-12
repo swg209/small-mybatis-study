@@ -6,7 +6,6 @@ package cn.suwg.mybatis.test.dao;
  */
 public interface IUserDao {
 
-    String queryUserName(String uid);
+    String queryUserInfoById(Long uid);
 
-    Integer queryUserAge(String uid);
 }
