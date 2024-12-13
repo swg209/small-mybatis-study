@@ -4,7 +4,7 @@
 
     <select id="queryUserInfoById" parameterType="java.lang.Long" resultType="cn.suwg.mybatis.test.po.User">
         SELECT id, user_id, user_head, create_time
-        FROM user
+        FROM my_user
         where id = #{id}
     </select>
 

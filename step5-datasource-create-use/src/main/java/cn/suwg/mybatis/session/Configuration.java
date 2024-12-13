@@ -1,7 +1,11 @@
 package cn.suwg.mybatis.session;
 
 import cn.suwg.mybatis.binding.MapperRegistry;
+import cn.suwg.mybatis.datasource.druid.DruidDataSourceFactory;
+import cn.suwg.mybatis.mapping.Environment;
 import cn.suwg.mybatis.mapping.MappedStatement;
+import cn.suwg.mybatis.transaction.jdbc.JdbcTransactionFactory;
+import cn.suwg.mybatis.type.TypeAliasRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +28,25 @@ public class Configuration {
      */
     protected final Map<String, MappedStatement> mappedStatementMap = new HashMap<>();
 
+    /**
+     * 类型别名注册机.
+     */
+    protected final TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
+
+    /**
+     * 环境.
+     */
+    protected Environment environment;
+
+
+    public Configuration() {
+        typeAliasRegistry.registerAlias("JDBC", JdbcTransactionFactory.class);
+        typeAliasRegistry.registerAlias("DRUID", DruidDataSourceFactory.class);
+    }
+
+    public TypeAliasRegistry getTypeAliasRegistry() {
+        return typeAliasRegistry;
+    }
 
     public void addMappers(String packageName) {
         mapperRegistry.addMappers(packageName);
@@ -49,5 +72,11 @@ public class Configuration {
         return mappedStatementMap.get(id);
     }
 
+    public Environment getEnvironment() {
+        return environment;
+    }
 
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
 }
