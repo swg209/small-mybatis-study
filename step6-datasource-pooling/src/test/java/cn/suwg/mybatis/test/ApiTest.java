@@ -43,4 +43,46 @@ public class ApiTest {
     }
 
 
+    // 测试无池化的数据源.
+    // 每次都会创建
+    @Test
+    public void testUnpooledDataSource() throws IOException {
+        // 1. 从SqlSessionFactory中获取SqlSession
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(
+                Resources.getResourceAsReader("mybatis-config-datasource.xml"));
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        // 2. 获取映射器对象
+        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
+
+        // 3. 测试验证
+        for (int i = 0; i < 50; i++) {
+            User user = userDao.queryUserInfoById(1L);
+            logger.info("测试结果：{}", JSON.toJSONString(user));
+        }
+
+    }
+
+
+    // 测试池化的数据源.
+    // 连接的获取从池子获取.
+    @Test
+    public void testPooledDataSource() throws IOException {
+        // 1. 从SqlSessionFactory中获取SqlSession
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(
+                Resources.getResourceAsReader("mybatis-config-datasource.xml"));
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        // 2. 获取映射器对象
+        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
+
+        // 3. 测试验证
+        for (int i = 0; i < 100; i++) {
+            User user = userDao.queryUserInfoById(1L);
+            logger.info("测试结果：{}", JSON.toJSONString(user));
+        }
+
+    }
+
+
 }
