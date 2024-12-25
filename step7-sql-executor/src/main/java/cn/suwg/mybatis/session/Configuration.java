@@ -4,8 +4,16 @@ import cn.suwg.mybatis.binding.MapperRegistry;
 import cn.suwg.mybatis.datasource.druid.DruidDataSourceFactory;
 import cn.suwg.mybatis.datasource.pooled.PooledDataSourceFactory;
 import cn.suwg.mybatis.datasource.unpooled.UnpooledDataSourceFactory;
+import cn.suwg.mybatis.executor.Executor;
+import cn.suwg.mybatis.executor.SimpleExecutor;
+import cn.suwg.mybatis.executor.resultset.DefaultResultSetHandler;
+import cn.suwg.mybatis.executor.resultset.ResultSetHandler;
+import cn.suwg.mybatis.executor.statement.PreparedStatementHandler;
+import cn.suwg.mybatis.executor.statement.StatementHandler;
+import cn.suwg.mybatis.mapping.BoundSql;
 import cn.suwg.mybatis.mapping.Environment;
 import cn.suwg.mybatis.mapping.MappedStatement;
+import cn.suwg.mybatis.transaction.Transaction;
 import cn.suwg.mybatis.transaction.jdbc.JdbcTransactionFactory;
 import cn.suwg.mybatis.type.TypeAliasRegistry;
 
@@ -47,6 +55,24 @@ public class Configuration {
         typeAliasRegistry.registerAlias("UNPOOLED", UnpooledDataSourceFactory.class);
         typeAliasRegistry.registerAlias("POOLED", PooledDataSourceFactory.class);
     }
+
+
+    // 创建结果集处理器ResultSetHandler
+    public ResultSetHandler newResultSetHandler(Executor executor, MappedStatement mappedStatement, BoundSql boundSql) {
+        return new DefaultResultSetHandler(executor, mappedStatement, boundSql);
+    }
+
+    // 创建执行器.
+    public Executor newExecutor(Transaction transaction) {
+        return new SimpleExecutor(this, transaction);
+    }
+
+    // 创建语句处理器.
+    public StatementHandler newStatementHandler(Executor executor, MappedStatement mappedStatement, Object parameter,
+                                                ResultHandler resultHandler, BoundSql boundSql) {
+        return new PreparedStatementHandler(executor, mappedStatement, parameter, resultHandler, boundSql);
+    }
+
 
     public TypeAliasRegistry getTypeAliasRegistry() {
         return typeAliasRegistry;
