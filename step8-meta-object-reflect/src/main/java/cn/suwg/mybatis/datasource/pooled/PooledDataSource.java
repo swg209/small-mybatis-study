@@ -366,6 +366,10 @@ public class PooledDataSource implements DataSource {
         forceCloseAll();
     }
 
+    public String getDriver() {
+        return dataSource.getDriver();
+    }
+
 
     public void setDefaultAutoCommit(boolean defaultAutoCommit) {
         dataSource.setAutoCommit(defaultAutoCommit);
