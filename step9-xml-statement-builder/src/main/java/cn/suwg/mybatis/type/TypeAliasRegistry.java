@@ -1,5 +1,7 @@
 package cn.suwg.mybatis.type;
 
+import cn.suwg.mybatis.io.Resources;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -35,7 +37,20 @@ public class TypeAliasRegistry {
     }
 
     public <T> Class<T> resolveAlias(String input) {
-        String key = input.toLowerCase(Locale.ENGLISH);
-        return (Class<T>) TYPE_ALIASES.get(key);
+        try {
+            if (input == null) {
+                return null;
+            }
+            String key = input.toLowerCase(Locale.ENGLISH);
+            Class<T> value;
+            if (TYPE_ALIASES.containsKey(key)) {
+                value = (Class<T>) TYPE_ALIASES.get(key);
+            } else {
+                value = (Class<T>) Resources.classForName(input);
+            }
+            return value;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Could not resolve type alias '" + input + "'.  Cause: " + e, e);
+        }
     }
 }

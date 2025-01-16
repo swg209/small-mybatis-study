@@ -28,7 +28,7 @@ public class MapperRegistry {
      * 获取映射器代理.
      */
     public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
-        MapperProxyFactory<?> mapperProxyFactory = knownMappers.get(type);
+        final MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) knownMappers.get(type);
         if (mapperProxyFactory == null) {
             throw new RuntimeException("Type " + type + " is not known to the MapperRegistry.");
         }

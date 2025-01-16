@@ -50,10 +50,11 @@ public class DefaultSqlSession implements SqlSession {
         //映射语句
         MappedStatement mappedStatement = configuration.getMappedStatement(statement);
         //使用执行器.
-        List<T> list = executor.query(mappedStatement, parameter, Executor.NO_RESULT_HANDLER, mappedStatement.getBoundSql());
+        List<T> list = executor.query(mappedStatement, parameter, Executor.NO_RESULT_HANDLER, mappedStatement.getSqlSource()
+                .getBoundSql(parameter));
         return list.get(0);
     }
-    
+
 
     @Override
     public <T> T getMapper(Class<T> type) {

@@ -18,9 +18,13 @@ public class MappedStatement {
 
     // SQL类型
     private SqlCommandType sqlCommandType;
+    
 
-    // 绑定SQL
-    private BoundSql boundSql;
+    // Sql源码
+    private SqlSource sqlSource;
+
+    // 结果类型
+    Class<?> resultType;
 
     MappedStatement() {
         // constructor disabled
@@ -32,11 +36,12 @@ public class MappedStatement {
     public static class Builder {
         private MappedStatement mappedStatement = new MappedStatement();
 
-        public Builder(Configuration configuration, String id, SqlCommandType sqlCommandType, BoundSql boundSql) {
+        public Builder(Configuration configuration, String id, SqlCommandType sqlCommandType, SqlSource sqlSource, Class<?> resultType) {
             mappedStatement.configuration = configuration;
             mappedStatement.id = id;
             mappedStatement.sqlCommandType = sqlCommandType;
-            mappedStatement.boundSql = boundSql;
+            mappedStatement.sqlSource = sqlSource;
+            mappedStatement.resultType = resultType;
         }
 
         public MappedStatement build() {
@@ -71,7 +76,11 @@ public class MappedStatement {
         this.sqlCommandType = sqlCommandType;
     }
 
-    public BoundSql getBoundSql() {
-        return boundSql;
+    public SqlSource getSqlSource() {
+        return sqlSource;
+    }
+
+    public Class<?> getResultType() {
+        return resultType;
     }
 }

@@ -13,12 +13,22 @@ import cn.suwg.mybatis.executor.statement.StatementHandler;
 import cn.suwg.mybatis.mapping.BoundSql;
 import cn.suwg.mybatis.mapping.Environment;
 import cn.suwg.mybatis.mapping.MappedStatement;
+import cn.suwg.mybatis.reflection.MetaObject;
+import cn.suwg.mybatis.reflection.factory.DefaultObjectFactory;
+import cn.suwg.mybatis.reflection.factory.ObjectFactory;
+import cn.suwg.mybatis.reflection.wrapper.DefaultObjectWrapperFactory;
+import cn.suwg.mybatis.reflection.wrapper.ObjectWrapperFactory;
+import cn.suwg.mybatis.scripting.LanguageDriverRegistry;
+import cn.suwg.mybatis.scripting.xmltags.XMLLanguageDriver;
 import cn.suwg.mybatis.transaction.Transaction;
 import cn.suwg.mybatis.transaction.jdbc.JdbcTransactionFactory;
 import cn.suwg.mybatis.type.TypeAliasRegistry;
+import cn.suwg.mybatis.type.TypeHandlerRegistry;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 会话配置信息.
@@ -44,9 +54,34 @@ public class Configuration {
     protected final TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
 
     /**
+     * 类型处理器注册机.
+     */
+    protected final TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry();
+
+    /**
+     * 脚本驱动注册机.
+     */
+    protected final LanguageDriverRegistry languageRegistry = new LanguageDriverRegistry();
+
+
+    /**
      * 环境.
      */
     protected Environment environment;
+
+    /**
+     * 已加载的资源.
+     */
+    protected final Set<String> loadedResources = new HashSet<>();
+
+    /**
+     * 对象工厂和对象包装器工厂.
+     */
+
+    protected ObjectFactory objectFactory = new DefaultObjectFactory();
+    protected ObjectWrapperFactory objectWrapperFactory = new DefaultObjectWrapperFactory();
+
+    protected String databaseId;
 
 
     public Configuration() {
@@ -54,6 +89,8 @@ public class Configuration {
         typeAliasRegistry.registerAlias("DRUID", DruidDataSourceFactory.class);
         typeAliasRegistry.registerAlias("UNPOOLED", UnpooledDataSourceFactory.class);
         typeAliasRegistry.registerAlias("POOLED", PooledDataSourceFactory.class);
+
+        languageRegistry.setDefaultDriverClass(XMLLanguageDriver.class);
     }
 
 
@@ -109,4 +146,35 @@ public class Configuration {
     public void setEnvironment(Environment environment) {
         this.environment = environment;
     }
+
+
+    public boolean isResourceLoaded(String resource) {
+        return loadedResources.contains(resource);
+    }
+
+    public void addLoadedResource(String resource) {
+        loadedResources.add(resource);
+    }
+
+
+    public TypeHandlerRegistry getTypeHandlerRegistry() {
+        return typeHandlerRegistry;
+    }
+
+
+    /**
+     * 创建元对象.
+     */
+    public MetaObject newMetaObject(Object object) {
+        return MetaObject.forObject(object, objectFactory, objectWrapperFactory);
+    }
+
+    public String getDatabaseId() {
+        return databaseId;
+    }
+
+    public LanguageDriverRegistry getLanguageRegistry() {
+        return languageRegistry;
+    }
+
 }
